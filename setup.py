@@ -7,7 +7,7 @@ with open('LICENSE') as f:
     license = f.read()
 
 with open('requirements.txt') as f:
-    required = f.read().splitlines()
+    required = f.readlines()
 
 setup(
     name='erpy',
