@@ -11,7 +11,7 @@ with open('requirements.txt') as f:
 
 setup(
     name='erpy',
-    version='0.1.0',
+    version='0.1.1',
     description='Evolutionary Robotics Python -- Brain-body co-optimisation framework',
     long_description=readme,
     url='https://github.com/Co-Evolve/erpy',

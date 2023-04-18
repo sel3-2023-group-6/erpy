@@ -23,11 +23,11 @@ class MJCRobot(Robot, ABC):
 
 
 class MJCMorphology(Morphology, composer.Entity, metaclass=abc.ABCMeta):
-    def __init__(self, specification: RobotSpecification) -> None:
+    def __init__(self, specification: RobotSpecification, *args, **kwargs) -> None:
         self._mjcf_model = mjcf.RootElement(model="morphology")
         self._mjcf_body = self._mjcf_model.worldbody.add('body')
         Morphology.__init__(self, specification)
-        composer.Entity.__init__(self)
+        composer.Entity.__init__(self, *args, **kwargs)
 
     @property
     def actuators(self) -> List[mjcf.Element]:
