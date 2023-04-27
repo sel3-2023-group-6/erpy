@@ -90,7 +90,7 @@ class WandBLogger(Logger):
         wandb_log_values(run=self.run, name='generation/fitness', values=fitnesses, step=population.generation)
 
     def _log_population_data(self, population: Population) -> None:
-        for name, data in population.logging_data:
+        for name, data in population.logging_data.items():
             wandb_log_unknown(run=self.run, name=name, data=data, step=population.generation)
 
     def _log_evaluation_result_data(self, population: Population) -> None:
