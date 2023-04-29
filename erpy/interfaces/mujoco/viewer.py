@@ -18,8 +18,11 @@ def evaluate_with_dm_control_viewer(env_config: MJCEnvironmentConfig, robot: MJC
 
     def policy_fn(timestep: TimeStep) -> np.ndarray:
         observations = get_clean_obs(timestep)
+        logging.debug("Z-angle: %s", observations["task/normalized_z_angle_to_target"])
         observations = vectorize_observations(observations)
         actions = robot(observations)[0]
+        if hasattr(robot.controller, '_q_table'):
+            logging.debug("Look up state in controller: %s", robot.controller._q_table._lookup_state_values(observations))
+        logging.debug("Actions: %s", actions)
         return actions
-
     viewer.launch(dm_env, policy=policy_fn)
