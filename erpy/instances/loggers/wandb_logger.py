@@ -24,6 +24,7 @@ class WandBLoggerConfig(LoggerConfig):
     pre_initialise_wandb: bool = True
     enable_tensorboard_backend: bool = False
     _run_name: str = None
+    sync_tensorboard: bool = True
 
     @property
     def run_name(self) -> str:

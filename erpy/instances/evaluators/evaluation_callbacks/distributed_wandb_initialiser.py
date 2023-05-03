@@ -30,7 +30,7 @@ class DistributedWandbInitialisationEvaluationCallback(EvaluationCallback):
         name = f"{self.logger_config.run_name}-genome-{genome_id}"
         self._wandb_run = wandb.init(project=project_name, group=group, tags=tags, name=name,
                                      resume="allow", id=name,
-                                     sync_tensorboard=True)
+                                     sync_tensorboard=self.logger_config.sync_tensorboard)
 
     def from_genome(self, genome: Genome) -> None:
         self._initialise_wandb(genome.genome_id)
