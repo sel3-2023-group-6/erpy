@@ -1,4 +1,5 @@
 from typing import Union, Dict
+import logging
 
 import numpy as np
 from dm_control import viewer
