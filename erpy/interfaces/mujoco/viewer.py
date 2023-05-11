@@ -19,7 +19,8 @@ def evaluate_with_dm_control_viewer(env_config: MJCEnvironmentConfig, robot: MJC
 
     def policy_fn(timestep: TimeStep) -> np.ndarray:
         observations = get_clean_obs(timestep)
-        logging.debug("Z-angle: %s", observations["task/normalized_z_angle_to_target"])
+        if "task/normalized_z_angle_to_target" in observations:
+            logging.debug("Z-angle: %s", observations["task/normalized_z_angle_to_target"])
         observations = vectorize_observations(observations)
         actions = robot(observations)[0]
         if hasattr(robot.controller, '_q_table'):
