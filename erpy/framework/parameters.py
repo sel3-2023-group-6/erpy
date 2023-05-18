@@ -23,6 +23,9 @@ class Parameter(metaclass=abc.ABCMeta):
             eq = all(eq)
         return eq
 
+    def __hash__(self) -> int:
+        return hash(self.value)
+
     @value.setter
     def value(self, value) -> None:
         self._value = value
@@ -65,6 +68,9 @@ class SynchronizedParameter(FixedParameter):
             eq = all(eq)
         return eq
 
+    def __hash__(self) -> int:
+        return hash((self.value, self._linked_parameter))
+
     @value.setter
     def value(self, value) -> None:
         raise TypeError("Cannot set the value of a SynchronizedParameter directly.")
@@ -83,6 +89,9 @@ class ContinuousParameter(Parameter):
 
         self._value = np.clip(self._value, self.low, self.high)
         return self._value
+
+    def __hash__(self) -> int:
+        return hash((self.value, self.low, self.high))
 
     @value.setter
     def value(self, value) -> None:
@@ -109,6 +118,9 @@ class RangeParameter(Parameter):
 
         return self._value
 
+    def __hash__(self) -> int:
+        return hash((self.value, self.low, self.high, self.sorted))
+
     @value.setter
     def value(self, value) -> None:
         assert self.low <= self.value <= self.high, f"[RangeParameter] Given value '{value}' is " \
@@ -129,6 +141,9 @@ class DiscreteParameter(Parameter):
         if self._value is None:
             self.set_random_value()
         return self._value
+
+    def __hash__(self) -> int:
+        return hash((self.value, self.options))
 
     @value.setter
     def value(self, value: T) -> None:
@@ -161,6 +176,9 @@ class MultiDiscreteParameter(Parameter):
         for v in value:
             assert v in self.options, f"[MultiDiscreteParameter] Given value '{v}' is not in options '{self.options}'"
         self._value = value
+
+    def __hash__(self) -> int:
+        return hash((self.value, self.options, self.min_size, self.max_size, self.sorted))
 
     def set_random_value(self) -> None:
         num_parameters = random_state.randint(low=self.min_size, high=self.max_size + 1)
