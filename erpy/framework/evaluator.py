@@ -86,7 +86,7 @@ class EvaluationCallback(metaclass=abc.ABCMeta):
         self._name = name
 
     @property
-    def shared_callback_data(self) -> Dict[any, str]:
+    def shared_callback_data(self) -> Dict[Any, str]:
         return self._shared_callback_data
 
     @property
